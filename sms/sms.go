@@ -2,12 +2,10 @@ package sms
 
 import (
 	"errors"
+	"fmt"
 	"regexp"
 )
 
-type SMSSender interface {
-	Send(to, message string) error
-}
 type handler struct {
 	sender SMSSender
 }
@@ -19,6 +17,7 @@ func New(s SMSSender) *handler {
 func (h *handler) SendMessage(to, msg string) error {
 	// validate phone
 	isValid := validatePhone(to)
+	fmt.Println(isValid)
 	if !isValid {
 		return errors.New("invalid phone")
 	}
